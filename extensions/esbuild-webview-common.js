@@ -30,7 +30,11 @@ async function build(options, didBuild) {
 		minify: true,
 		sourcemap: false,
 		format: 'esm',
-		platform: 'browser',
+		external: [
+			'dompurify',
+			'morphdom',
+			'lodash.throttle'
+		], platform: 'browser',
 		target: ['es2020'],
 		...options,
 	});

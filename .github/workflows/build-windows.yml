@@ -1,0 +1,31 @@
+name: Build VS Code .exe on Windows
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          npm install -g yarn
+          yarn
+
+      - name: Build VS Code for Windows
+        run: |
+          npx gulp vscode-win32-x64-archive
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: vscode-windows-build
+          path: .build/win32-x64/archive/*.zip
